@@ -1,0 +1,39 @@
+register:
+  warning-chat-double: '&cRegister with: /register <yourPassword> <confirmPassword>'
+  warning-chat: '&cRegister with: /register <yourPassword>'
+  warning-title: '&c&lYou have to register'
+  warning-subtitle-double: '&f/register <yourPassword> <confirmPassword>, in order to login'
+  warning-subtitle: '&f/register <yourPassword>, in order to login'
+  expire: '&4It took you too long to register.'
+  not-registered: '&4You are not registered in the database! Please contact an admin.'
+  already-registered: '&4You are already registered!'
+  nickname-too-short: '&4Your nickname is too short.'
+  nickname-too-long: '&4Your nickname is too long.'
+  invalid-password: '&4Your password is too long or short. Try again.'
+  unsafe-password: '&4Your password is unsafe. Try again.'
+  passwords-not-match: '&4The two passwords do not match.'
+  registered-successfully: '&5You have registered successfully!'
+  kick: '&2Re-join to login.'
+  usage-double: '&4Use: /register <yourPassword> <confirmPassword>'
+  usage: '&4Use: /register <yourPassword>'
+
+login:
+  warning-chat: '&cLogin with: /login <yourPassword>'
+  warning-title: '&c&lYou have to login'
+  warning-subtitle: '&f/login <yourPassword>, in order to continue'
+  expire: '&4It took you too long to authenticate.'
+  already-logged: '&4You are already logged in!'
+  not-registered: '&4You have to register in order to log in.'
+  wrong-password: '&4Wrong password!'
+  logged-successfully: '&2You have logged-in!'
+  usage: '&4Use: /login <yourPassword>'
+
+auth:
+  blocked-commands: '&4You have to authenticate in order to execute commands.'
+  blocked-chat: '&4You have to authenticate in order to send chat messages.'
+
+sessions:
+  successful: '&2You have been automatically authenticated!'
+
+restrictions:
+  wrong-username: '&4The real username should be %NAME%.'

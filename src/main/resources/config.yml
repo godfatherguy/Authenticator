@@ -1,0 +1,113 @@
+#      /$$$$$$  /$$   /$$ /$$$$$$$$ /$$   /$$ /$$$$$$$$ /$$   /$$ /$$$$$$$$ /$$$$$$  /$$$$$$   /$$$$$$  /$$$$$$$$ /$$$$$$  /$$$$$$$
+#     /$$__  $$| $$  | $$|__  $$__/| $$  | $$| $$_____/| $$$ | $$|__  $$__/|_  $$_/ /$$__  $$ /$$__  $$|__  $$__//$$__  $$| $$__  $$
+#    | $$  \ $$| $$  | $$   | $$   | $$  | $$| $$      | $$$$| $$   | $$     | $$  | $$  \__/| $$  \ $$   | $$  | $$  \ $$| $$  \ $$
+#    | $$$$$$$$| $$  | $$   | $$   | $$$$$$$$| $$$$$   | $$ $$ $$   | $$     | $$  | $$      | $$$$$$$$   | $$  | $$  | $$| $$$$$$$/
+#    | $$__  $$| $$  | $$   | $$   | $$__  $$| $$__/   | $$  $$$$   | $$     | $$  | $$      | $$__  $$   | $$  | $$  | $$| $$__  $$
+#    | $$  | $$| $$  | $$   | $$   | $$  | $$| $$      | $$\  $$$   | $$     | $$  | $$    $$| $$  | $$   | $$  | $$  | $$| $$  \ $$
+#    | $$  | $$|  $$$$$$/   | $$   | $$  | $$| $$$$$$$$| $$ \  $$   | $$    /$$$$$$|  $$$$$$/| $$  | $$   | $$  |  $$$$$$/| $$  | $$
+#    |__/  |__/ \______/    |__/   |__/  |__/|________/|__/  \__/   |__/   |______/ \______/ |__/  |__/   |__/   \______/ |__/  |__/  version 1.0 by godfather
+
+auth-on-join: true
+
+####################################
+#         SESSION SETTINGS         #
+####################################
+
+sessions:
+  #If the player logs out, does he have the option to re-enter without having to log in again?
+  enabled: false
+  #How long does the session expire? (In seconds)
+  timeout: 20
+  #In order to access the session, the player must have the same ip?
+  expire-on-ip-change: true
+
+
+####################################
+#      REGISTRATION SETTINGS       #
+####################################
+
+registration:
+  #Can players not registered in the database register themselves?
+  enabled: true
+  #How long can it take a player to register? (0 if you want to set limitless time)
+  timeout: 30
+  nickname:
+    min-length: 3
+    max-length: 16
+  warnings:
+    #How often will a chat warn appear?
+    delay: 10
+    #Should the player also be warned by a title message? (see language.yml for more details)
+    warn-with-title: true
+  password:
+    #/register <password> <confirmPassword>
+    double-check: true
+    min-length: 4
+    max-length: 30
+    #Make a list of passwords that you won't allow
+    unsafe-passwords:
+      - 'password'
+      - '123456789'
+      - 'qwerty'
+      - 'asdfgh'
+      - 'zxcvbn'
+      #The player's name is also an unsafe password.
+  kick-after-registration: false
+  login-after-registration: false
+
+
+####################################
+#          LOGIN SETTINGS          #
+####################################
+
+login:
+  #How long can it take a player to login? (0 if you want to set limitless time)
+  timeout: 30
+  #Should the player be kicked if he misses the password?
+  kick-on-wrong-password: true
+  warnings:
+    #How often will a chat warn appear?
+    delay: 10
+    #Should the player also be warned by a title message? (see language.yml for more details)
+    warn-with-title: true
+
+
+####################################
+#       AUTH GENERAL SETTINGS      #
+####################################
+
+auth:
+  #Does the un-authed players have to be teleported to spawn when entering? (see spawn.yml)
+  spawn-on-join: false
+  invisible-when-auth: true
+  invulnerable-when-auth: true
+  restrictions:
+    #Should the inventory be hidden from players until they authenticate?
+    hide-inventory: true
+    #Should the players be frozen until they authenticate?
+    block-movements: true
+    #Should players be prevented from executing commands?
+    block-commands: true
+    #Can players receive chat messages?
+    receive-chat: false
+    #Can players send chat messages?
+    send-chat: false
+  gamemode:
+    force-survival: false
+    force-survival-after-login: false
+  #Should the players get blind until they authenticate?
+  blindness-on-join: true
+  show-accounts: true
+
+
+####################################
+#       RESTRICTION SETTINGS       #
+####################################
+
+restrictions:
+  #Setting a value to 0, the function will be disabled.
+  maxReg-per-ip: 1
+  maxLog-per-ip: 1
+  maxJoin-per-ip: 0
+  #Example: instead of 'godfatherguy', somebody could login as 'GodFatherGuy'. Should this function be blocked?
+  block-fake-usernames: true

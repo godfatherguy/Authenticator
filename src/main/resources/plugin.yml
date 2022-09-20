@@ -1,0 +1,33 @@
+name: Authenticator
+author: godfather
+main: org.godfather.authenticator.Authenticator
+version: 1.0
+api-version: 1.19
+
+commands:
+  register:
+    aliases: [reg,r]
+  login:
+    aliases: [log,l]
+  unregister:
+    aliases: [unreg, unr]
+  changepassword:
+    aliases: [changepass,newpassword,newpass,resetpassword,resetpass]
+
+
+permissions:
+  auth.register:
+    usage: Allows a player to register his account.
+    default: true
+  auth.login:
+    usage: Allows a player to log into his account.
+    default: true
+  auth.unregister:
+    usage: Allows a player to remove his account from the database.
+    default: false
+  auth.changepassword:
+    usage: Allows a player to change his password.
+    default: false
+  auth.accounts:
+    usage: Allows a player to see other players ip accounts.
+    default: false
