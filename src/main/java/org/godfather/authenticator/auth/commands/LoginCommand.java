@@ -32,6 +32,12 @@ public class LoginCommand implements CommandExecutor {
             player.sendMessage(plugin.getConfigManager().getLangFile().getLoginMessages().get(5));
             return false;
         }
+
+        if(!player.hasPermission("auth.login") && !player.isOp()) {
+            player.sendMessage(plugin.getConfigManager().getLangFile().getNoPerm());
+            return false;
+        }
+
         if (args.length != 1) {
             player.sendMessage(plugin.getConfigManager().getLangFile().getLoginMessages().get(8));
             return false;
@@ -41,7 +47,7 @@ public class LoginCommand implements CommandExecutor {
         if(plugin.getConfigManager().getConfigFile().getRestrictions().getMaxLogIP() != 0) {
             int ipCount = plugin.getPlayerData().getIPs(player);
             if(ipCount > plugin.getConfigManager().getConfigFile().getRestrictions().getMaxLogIP()) {
-                player.kickPlayer(ChatColor.DARK_RED + "You have logged in too many accounts.");
+                player.kickPlayer(plugin.getConfigManager().getLangFile().getRestrictionMessages().get(1));
                 return false;
             }
         }
@@ -62,19 +68,16 @@ public class LoginCommand implements CommandExecutor {
             StringBuilder stringBuilder = new StringBuilder();
             for (String string : plugin.getPlayerData().getAccounts(player)) {
                 if (string.equals(player.getName())) continue;
-                stringBuilder.append(ChatColor.RED).append(string).append(", ");
+                stringBuilder.append(string).append(", ");
             }
-            player.sendMessage(" ");
-            player.sendMessage(ChatColor.WHITE + "Your actual account: " + ChatColor.GREEN + player.getName());
-            player.sendMessage(ChatColor.GRAY + "Your other accounts: " + stringBuilder);
-            player.sendMessage(" ");
+            for(String string : plugin.getConfigManager().getLangFile().getAuthShowAcc()) {
+                player.sendMessage(string.replaceAll("%NAME%", player.getName()).replaceAll("%OTHERS%", stringBuilder.toString()));
+            }
 
             for(Player players : Bukkit.getOnlinePlayers()) {
-                if(!players.hasPermission("auth.accounts") && !players.isOp()) continue;
-                players.sendMessage(" ");
-                players.sendMessage(ChatColor.WHITE + player.getName() + "has other " +  plugin.getPlayerData().getIPs(player) + " accounts: ");
-                players.sendMessage(stringBuilder.toString());
-                players.sendMessage(" ");;
+                for(String string : plugin.getConfigManager().getLangFile().getAuthShowAdmin()) {
+                    players.sendMessage(string.replaceAll("%NAME%", player.getName()).replaceAll("%OTHERS%", stringBuilder.toString()));
+                }
             }
         }
 

@@ -26,6 +26,10 @@ public class AuthConfig {
         return configurationFile.getConfig().getBoolean("auth.restrictions.block-commands");
     }
 
+    public boolean blockBuilding() {
+        return configurationFile.getConfig().getBoolean("auth.restrictions.block-building");
+    }
+
     public boolean receiveChat() {
         return configurationFile.getConfig().getBoolean("auth.restrictions.receive-chat");
     }

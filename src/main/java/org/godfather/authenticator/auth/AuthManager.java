@@ -7,6 +7,7 @@ import org.godfather.authenticator.auth.commands.ChangepasswordCommand;
 import org.godfather.authenticator.auth.commands.LoginCommand;
 import org.godfather.authenticator.auth.commands.RegisterCommand;
 import org.godfather.authenticator.auth.commands.UnregisterCommand;
+import org.godfather.authenticator.auth.listeners.MobEvents;
 import org.godfather.authenticator.auth.listeners.PlayerInWorld;
 import org.godfather.authenticator.auth.listeners.PlayersEvent;
 import org.godfather.authenticator.utils.AuthPlayer;
@@ -147,5 +148,6 @@ public class AuthManager {
         Objects.requireNonNull(plugin.getCommand("changepassword")).setExecutor(new ChangepasswordCommand(plugin));
         plugin.getServer().getPluginManager().registerEvents(new PlayerInWorld(this), plugin);
         plugin.getServer().getPluginManager().registerEvents(new PlayersEvent(this), plugin);
+        plugin.getServer().getPluginManager().registerEvents(new MobEvents(this), plugin);
     }
 }

@@ -1,9 +1,13 @@
 package org.godfather.authenticator.auth.listeners;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -27,6 +31,17 @@ public class PlayerInWorld implements Listener {
             return;
         if (!authManager.getInstance().getConfigManager().getConfigFile().getAuth().blockMovements())
             return;
+
+        if (player.getLocation().add(0, -1, 0).getBlock().getType() == Material.AIR) {
+            Block latestBlock = null;
+            for (int i = 0; i < 384; i++) {
+                if (player.getLocation().add(0, -i, 0).getBlock().getType() == Material.AIR) continue;
+                latestBlock = player.getLocation().add(0, -i, 0).getBlock();
+                break;
+            }
+            if (latestBlock != null)
+                player.teleport(latestBlock.getLocation().add(0, 1, 0));
+        }
 
         event.setTo(new Location(player.getWorld(), event.getFrom().getX(), Objects.requireNonNull(event.getFrom()).getY(), event.getFrom().getZ(), Objects.requireNonNull(event.getTo()).getYaw(), event.getTo().getPitch()));
     }
@@ -63,5 +78,21 @@ public class PlayerInWorld implements Listener {
 
         event.setCancelled(true);
         player.sendMessage(authManager.getInstance().getConfigManager().getLangFile().getAuthMessages().get(0));
+    }
+
+    @EventHandler
+    public void onPlace(BlockPlaceEvent event) {
+        if(!authManager.getInstance().getConfigManager().getConfigFile().getAuth().blockBuilding())
+            return;
+
+        event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onBuild(BlockBreakEvent event) {
+        if(!authManager.getInstance().getConfigManager().getConfigFile().getAuth().blockBuilding())
+            return;
+
+        event.setCancelled(true);
     }
 }

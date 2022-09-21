@@ -88,6 +88,8 @@ auth:
     block-movements: true
     #Should players be prevented from executing commands?
     block-commands: true
+    #Should players be prevented from building?
+    block-build: true
     #Can players receive chat messages?
     receive-chat: false
     #Can players send chat messages?

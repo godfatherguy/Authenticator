@@ -1,3 +1,6 @@
+general:
+  no-permission: '&4You don''t have access to this command.'
+
 register:
   warning-chat-double: '&cRegister with: /register <yourPassword> <confirmPassword>'
   warning-chat: '&cRegister with: /register <yourPassword>'
@@ -5,7 +8,7 @@ register:
   warning-subtitle-double: '&f/register <yourPassword> <confirmPassword>, in order to login'
   warning-subtitle: '&f/register <yourPassword>, in order to login'
   expire: '&4It took you too long to register.'
-  not-registered: '&4You are not registered in the database! Please contact an admin.'
+  not-registered: '&4You are not registered in the database!'
   already-registered: '&4You are already registered!'
   nickname-too-short: '&4Your nickname is too short.'
   nickname-too-long: '&4Your nickname is too long.'
@@ -16,6 +19,16 @@ register:
   kick: '&2Re-join to login.'
   usage-double: '&4Use: /register <yourPassword> <confirmPassword>'
   usage: '&4Use: /register <yourPassword>'
+
+unregister:
+  not-authed: '&4You have to be authenticated in order to unregister.'
+  unregistered-successfully: '&2You have been unregistered from the database.'
+  usage: '&4Use: /unregister <yourPassword> <confirmPassword>'
+
+changepassword:
+  not-authed: '&4You have to be authenticated in order to change password.'
+  changed-successfully: '&2Your password has been changed successfully!'
+  usage: '&4Use: /changepassword <oldPassword> <newPassword>'
 
 login:
   warning-chat: '&cLogin with: /login <yourPassword>'
@@ -31,9 +44,22 @@ login:
 auth:
   blocked-commands: '&4You have to authenticate in order to execute commands.'
   blocked-chat: '&4You have to authenticate in order to send chat messages.'
+  show-accounts:
+    - ' '
+    - '&fYour actual account: &a%NAME%'
+    - '&7Your other accounts: &c%OTHERS%'
+    - ' '
+  show-accounts-admin:
+    - ' '
+    - '&f%NAME% has other %QUANTITY% accounts: '
+    - '&c%OTHERS%'
+    - ' '
 
 sessions:
   successful: '&2You have been automatically authenticated!'
 
 restrictions:
   wrong-username: '&4The real username should be %NAME%.'
+  log-too-many-ip: '&4You have logged in too many accounts.'
+  reg-too-many-ip: '&4You have registered too many accounts.'
+  join-too-many-ip: '&4You have joined with too many accounts.'

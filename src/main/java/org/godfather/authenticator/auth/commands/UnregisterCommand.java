@@ -23,33 +23,38 @@ public class UnregisterCommand implements CommandExecutor {
         }
         Player player = (Player) sender;
         if (plugin.getAuthManager().isAuth(player)) {
-            player.sendMessage(ChatColor.DARK_RED + "You have to be authenticated in order to unregister.");
+            player.sendMessage(plugin.getConfigManager().getLangFile().getUnRegisterMessages().get(0));
+            return false;
+        }
+
+        if(!player.hasPermission("auth.unregister") && !player.isOp()) {
+            player.sendMessage(plugin.getConfigManager().getLangFile().getNoPerm());
             return false;
         }
 
         if(args.length != 2) {
-            player.sendMessage(ChatColor.DARK_RED + "Use: /unregister <yourPassword> <confirmPassword>");
+            player.sendMessage(plugin.getConfigManager().getLangFile().getUnRegisterMessages().get(2));
             return false;
         }
 
         if(!plugin.getPlayerData().isSaved(player)) {
-            player.sendMessage(ChatColor.DARK_RED + "You are not registered in the database.");
+            player.sendMessage(plugin.getConfigManager().getLangFile().getRegistrationMessages().get(6));
             return false;
         }
         String password = args[0];
 
         if (!password.equals(args[1])) {
-            player.sendMessage(ChatColor.DARK_RED + "The passwords don't match.");
+            player.sendMessage(plugin.getConfigManager().getLangFile().getRegistrationMessages().get(13));
             return false;
         }
 
         if(!password.equals(plugin.getPlayerData().getPassword(player))) {
-            player.sendMessage(ChatColor.DARK_RED + "Wrong password!");
+            player.sendMessage(plugin.getConfigManager().getLangFile().getLoginMessages().get(6));
             return false;
         }
 
         plugin.getPlayerData().getFileConfiguration().set(player.getName(), null);
-        player.kickPlayer(ChatColor.DARK_GREEN + "You have been unregistered from the database.");
+        player.kickPlayer(plugin.getConfigManager().getLangFile().getUnRegisterMessages().get(1));
         return true;
     }
 }

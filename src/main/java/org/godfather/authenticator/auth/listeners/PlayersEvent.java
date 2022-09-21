@@ -33,16 +33,16 @@ public class PlayersEvent implements Listener {
             }
         }
 
-        if(authManager.getInstance().getConfigManager().getConfigFile().getRestrictions().getMaxJoinIP() != 0) {
+        if (authManager.getInstance().getConfigManager().getConfigFile().getRestrictions().getMaxJoinIP() != 0) {
             int ipCount = authManager.getInstance().getPlayerData().getIPs(player);
-            if(ipCount > authManager.getInstance().getConfigManager().getConfigFile().getRestrictions().getMaxJoinIP()) {
-                player.kickPlayer(ChatColor.DARK_RED + "You have joined with too many accounts.");
+            if (ipCount > authManager.getInstance().getConfigManager().getConfigFile().getRestrictions().getMaxJoinIP()) {
+                player.kickPlayer(authManager.getInstance().getConfigManager().getLangFile().getRestrictionMessages().get(3));
                 return;
             }
         }
 
-        if(authManager.getInstance().getConfigManager().getConfigFile().getAuth().spawnOnJoin()) {
-            if(authManager.getInstance().getSpawnData().getSpawn().getWorld() != null)
+        if (authManager.getInstance().getConfigManager().getConfigFile().getAuth().spawnOnJoin()) {
+            if (authManager.getInstance().getSpawnData().getSpawn().getWorld() != null)
                 player.teleport(authManager.getInstance().getSpawnData().getSpawn());
         }
 
@@ -56,10 +56,6 @@ public class PlayersEvent implements Listener {
             player.setInvisible(true);
         if (authManager.getInstance().getConfigManager().getConfigFile().getAuth().invincible())
             player.setInvulnerable(true);
-
-        if (authManager.getInstance().getConfigManager().getConfigFile().getAuth().spawnOnJoin()) {
-            //todo spawn on join
-        }
         if (authManager.getInstance().getConfigManager().getConfigFile().getAuth().blindnessOnJoin())
             player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 100000000, 3));
         if (authManager.getInstance().getConfigManager().getConfigFile().getAuth().forceSurvival())

@@ -28,6 +28,11 @@ public class RegisterCommand implements CommandExecutor {
             return false;
         }
 
+        if(!player.hasPermission("auth.register") && !player.isOp()) {
+            player.sendMessage(plugin.getConfigManager().getLangFile().getNoPerm());
+            return false;
+        }
+
         if (player.getName().length() < plugin.getConfigManager().getConfigFile().getRegistration().getNicknameMinLength()) {
             player.kickPlayer(plugin.getConfigManager().getLangFile().getRegistrationMessages().get(8));
             return false;
@@ -39,7 +44,7 @@ public class RegisterCommand implements CommandExecutor {
         if(plugin.getConfigManager().getConfigFile().getRestrictions().getMaxRegIP() != 0) {
             int ipCount = plugin.getPlayerData().getIPs(player);
             if(ipCount > plugin.getConfigManager().getConfigFile().getRestrictions().getMaxRegIP()) {
-                player.kickPlayer(ChatColor.DARK_RED + "You have registered too many accounts.");
+                player.kickPlayer(plugin.getConfigManager().getLangFile().getRestrictionMessages().get(2));
                 return false;
             }
         }

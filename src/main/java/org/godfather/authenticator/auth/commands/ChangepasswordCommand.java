@@ -23,24 +23,29 @@ public class ChangepasswordCommand implements CommandExecutor {
         }
         Player player = (Player) sender;
         if (plugin.getAuthManager().isAuth(player)) {
-            player.sendMessage(ChatColor.DARK_RED + "You have to be authenticated in order to unregister.");
+            player.sendMessage(plugin.getConfigManager().getLangFile().getChangepassMessages().get(0));
+            return false;
+        }
+
+        if(!player.hasPermission("auth.changepassword") && !player.isOp()) {
+            player.sendMessage(plugin.getConfigManager().getLangFile().getNoPerm());
             return false;
         }
 
         if(args.length != 2) {
-            player.sendMessage(ChatColor.DARK_RED + "Use: /changepassword <oldPassword> <newPassword>");
+            player.sendMessage(plugin.getConfigManager().getLangFile().getChangepassMessages().get(2));
             return false;
         }
 
         if(!plugin.getPlayerData().isSaved(player)) {
-            player.sendMessage(ChatColor.DARK_RED + "You are not registered in the database.");
+            player.sendMessage(plugin.getConfigManager().getLangFile().getRegistrationMessages().get(6));
             return false;
         }
         String oldPassword = args[0];
         String newPassword = args[1];
 
         if(!oldPassword.equals(plugin.getPlayerData().getPassword(player))) {
-            player.sendMessage(ChatColor.DARK_RED + "Wrong password!");
+            player.sendMessage(plugin.getConfigManager().getLangFile().getLoginMessages().get(6));
             return false;
         }
         int minLength = plugin.getConfigManager().getConfigFile().getRegistration().getPasswordMinLength();
@@ -56,7 +61,7 @@ public class ChangepasswordCommand implements CommandExecutor {
         }
 
         plugin.getPlayerData().setPassword(player, newPassword);
-        player.sendMessage(ChatColor.DARK_GREEN + "Your password has been changed successfully!");
+        player.sendMessage(plugin.getConfigManager().getLangFile().getChangepassMessages().get(1));
         return true;
     }
 }
