@@ -63,3 +63,10 @@ restrictions:
   log-too-many-ip: '&4You have logged in too many accounts.'
   reg-too-many-ip: '&4You have registered too many accounts.'
   join-too-many-ip: '&4You have joined with too many accounts.'
+
+admin-commands:
+  not-registered: '&4This player isn''t registered in the database.'
+  unregistered-successfully: '&5You have successfully unregistered %NAME%.'
+  already-registered: '&4This player is already registered.'
+  registered-successfully: '&5You have successfully registered %NAME%.'
+  usage: '&4Usage: /auth <register|unregister|changepassword> <player> [password]'

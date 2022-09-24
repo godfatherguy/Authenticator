@@ -67,6 +67,11 @@ public class PlayerData {
         savePlayerConfig();
     }
 
+    public void setPassword(String name, String password) {
+        fileConfiguration.set(name + ".password", password);
+        savePlayerConfig();
+    }
+
     public void refreshIP(Player player) {
         fileConfiguration.set(player.getName() + ".ip", Objects.requireNonNull(player.getAddress()).getAddress().getHostAddress());
         savePlayerConfig();
@@ -80,8 +85,20 @@ public class PlayerData {
         return exist;
     }
 
+    public boolean isSaved(String name) {
+        boolean exist = false;
+        for (String key : fileConfiguration.getKeys(false)) {
+            if (key.equals(name)) exist = true;
+        }
+        return exist;
+    }
+
     public boolean isRegistered(Player player) {
         return fileConfiguration.getString(player.getName() + ".password") != null;
+    }
+
+    public boolean isRegistered(String name) {
+        return fileConfiguration.getString(name + ".password") != null;
     }
 
     public String getPassword(Player player) {

@@ -6,13 +6,15 @@ api-version: 1.19
 
 commands:
   register:
-    aliases: [reg,r]
+    aliases: [reg]
   login:
     aliases: [log,l]
   unregister:
     aliases: [unreg, unr]
   changepassword:
     aliases: [changepass,newpassword,newpass,resetpassword,resetpass]
+  authenticator:
+    aliases: [auth]
 
 
 permissions:
@@ -30,4 +32,18 @@ permissions:
     default: false
   auth.accounts:
     usage: Allows a player to see other players ip accounts.
+    default: false
+  auth.register.others:
+    default: false
+  auth.unregister.others:
+    default: false
+  auth.changepassword.others:
+    default: false
+  auth.spawn:
+    default: false
+  auth.setspawn:
+    default: false
+  auth.delspawn:
+    default: false
+  auth.reload:
     default: false

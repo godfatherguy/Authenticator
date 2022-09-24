@@ -72,8 +72,7 @@ public class PlayerInWorld implements Listener {
             return;
 
         if (event.getMessage().startsWith("/register") || event.getMessage().startsWith("/reg")
-                || event.getMessage().startsWith("/r") || event.getMessage().startsWith("/login")
-                || event.getMessage().startsWith("/log") || event.getMessage().startsWith("/l"))
+                || event.getMessage().startsWith("/login") || event.getMessage().startsWith("/log") || event.getMessage().startsWith("/l"))
             return;
 
         event.setCancelled(true);

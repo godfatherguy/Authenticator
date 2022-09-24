@@ -56,8 +56,6 @@ public class PlayersEvent implements Listener {
             player.setInvisible(true);
         if (authManager.getInstance().getConfigManager().getConfigFile().getAuth().invincible())
             player.setInvulnerable(true);
-        if (authManager.getInstance().getConfigManager().getConfigFile().getAuth().blindnessOnJoin())
-            player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 100000000, 3));
         if (authManager.getInstance().getConfigManager().getConfigFile().getAuth().forceSurvival())
             player.setGameMode(GameMode.SURVIVAL);
         if (authManager.getInstance().getConfigManager().getConfigFile().getAuth().hideInventory())
@@ -94,7 +92,6 @@ public class PlayersEvent implements Listener {
 
         player.setInvulnerable(false);
         player.setInvisible(false);
-        player.removePotionEffect(PotionEffectType.BLINDNESS);
 
         if (authManager.getInstance().getConfigManager().getConfigFile().getAuth().hideInventory())
             authManager.getAuthPlayer(player).showInventory();

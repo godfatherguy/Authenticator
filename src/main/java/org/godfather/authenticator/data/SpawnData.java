@@ -60,7 +60,13 @@ public class SpawnData {
         saveSpawnConfig();
     }
 
+    public void removeSpawn() {
+        fileConfiguration.set("spawn", null);
+        saveSpawnConfig();
+    }
+
     public Location getSpawn() {
+        if(fileConfiguration.getConfigurationSection("spawn") == null) return null;
         double x = fileConfiguration.getDouble("spawn.x");
         double y = fileConfiguration.getDouble("spawn.y");
         double z = fileConfiguration.getDouble("spawn.z");

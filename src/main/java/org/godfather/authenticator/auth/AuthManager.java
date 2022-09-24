@@ -1,12 +1,11 @@
 package org.godfather.authenticator.auth;
 
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.godfather.authenticator.Authenticator;
-import org.godfather.authenticator.auth.commands.ChangepasswordCommand;
-import org.godfather.authenticator.auth.commands.LoginCommand;
-import org.godfather.authenticator.auth.commands.RegisterCommand;
-import org.godfather.authenticator.auth.commands.UnregisterCommand;
+import org.godfather.authenticator.auth.commands.*;
 import org.godfather.authenticator.auth.listeners.MobEvents;
 import org.godfather.authenticator.auth.listeners.PlayerInWorld;
 import org.godfather.authenticator.auth.listeners.PlayersEvent;
@@ -60,6 +59,10 @@ public class AuthManager {
     public void addRegister(Player player) {
         register.add(player.getUniqueId());
         int timeout = plugin.getConfigManager().getConfigFile().getRegistration().getTimeout();
+        if (plugin.getConfigManager().getConfigFile().getAuth().blindnessOnJoin()) {
+            player.removePotionEffect(PotionEffectType.DARKNESS);
+            player.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS, 100000000, 3));
+        }
         if (plugin.getConfigManager().getConfigFile().getRegistration().warnTitle()) {
             if (plugin.getConfigManager().getConfigFile().getRegistration().passwordDoubleCheck())
                 player.sendTitle(plugin.getConfigManager().getLangFile().getRegistrationMessages().get(2), plugin.getConfigManager().getLangFile().getRegistrationMessages().get(3), 0, timeout * 20, 0);
@@ -92,6 +95,10 @@ public class AuthManager {
     public void addLogin(Player player) {
         login.add(player.getUniqueId());
         int timeout = plugin.getConfigManager().getConfigFile().getLogin().getTimeout();
+        if (plugin.getConfigManager().getConfigFile().getAuth().blindnessOnJoin()) {
+            player.removePotionEffect(PotionEffectType.DARKNESS);
+            player.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS, 100000000, 3));
+        }
         if (plugin.getConfigManager().getConfigFile().getLogin().warnTitle())
             player.sendTitle(plugin.getConfigManager().getLangFile().getLoginMessages().get(1), plugin.getConfigManager().getLangFile().getLoginMessages().get(2), 0, timeout * 20, 0);
         new BukkitRunnable() {
@@ -122,11 +129,17 @@ public class AuthManager {
     public void removeRegister(Player player) {
         register.remove(player.getUniqueId());
         player.sendTitle(" ", " ", 0, 1, 0);
+        if (plugin.getConfigManager().getConfigFile().getAuth().blindnessOnJoin()) {
+            player.removePotionEffect(PotionEffectType.DARKNESS);
+        }
     }
 
     public void removeLogin(Player player) {
         login.remove(player.getUniqueId());
         player.sendTitle(" ", " ", 0, 1, 0);
+        if (plugin.getConfigManager().getConfigFile().getAuth().blindnessOnJoin()) {
+            player.removePotionEffect(PotionEffectType.DARKNESS);
+        }
     }
 
     public void removeSession(Player player) {
@@ -146,6 +159,9 @@ public class AuthManager {
         Objects.requireNonNull(plugin.getCommand("login")).setExecutor(new LoginCommand(plugin));
         Objects.requireNonNull(plugin.getCommand("unregister")).setExecutor(new UnregisterCommand(plugin));
         Objects.requireNonNull(plugin.getCommand("changepassword")).setExecutor(new ChangepasswordCommand(plugin));
+        AuthCommand authCommand = new AuthCommand(plugin);
+        Objects.requireNonNull(plugin.getCommand("authenticator")).setExecutor(authCommand);
+        Objects.requireNonNull(plugin.getCommand("authenticator")).setTabCompleter(authCommand);
         plugin.getServer().getPluginManager().registerEvents(new PlayerInWorld(this), plugin);
         plugin.getServer().getPluginManager().registerEvents(new PlayersEvent(this), plugin);
         plugin.getServer().getPluginManager().registerEvents(new MobEvents(this), plugin);
