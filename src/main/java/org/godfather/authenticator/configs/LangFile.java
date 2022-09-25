@@ -99,4 +99,13 @@ public class LangFile {
         }
         return messages;
     }
+
+    public List<String> getCommandsMessages() {
+        List<String> messages = new ArrayList<>();
+        FileConfiguration config = configManager.getInstance().getLangData().getFileConfiguration();
+        for(String key : Objects.requireNonNull(config.getConfigurationSection("admin-commands")).getKeys(false)) {
+            messages.add(ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(config.getString("admin-commands." + key))));
+        }
+        return messages;
+    }
 }

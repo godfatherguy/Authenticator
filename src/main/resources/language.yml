@@ -15,7 +15,7 @@ register:
   invalid-password: '&4Your password is too long or short. Try again.'
   unsafe-password: '&4Your password is unsafe. Try again.'
   passwords-not-match: '&4The two passwords do not match.'
-  registered-successfully: '&5You have registered successfully!'
+  registered-successfully: '&2You have registered successfully!'
   kick: '&2Re-join to login.'
   usage-double: '&4Use: /register <yourPassword> <confirmPassword>'
   usage: '&4Use: /register <yourPassword>'
@@ -65,8 +65,15 @@ restrictions:
   join-too-many-ip: '&4You have joined with too many accounts.'
 
 admin-commands:
+  reloaded-successfully: '&2All the configs were successfully reloaded.'
+  spawn-set-successfully: '&2You have set the new spawn point.'
+  no-spawn-set: '&4There is no spawn set.'
+  spawn-remove-successfully: '&2You have removed the spawn point.'
+  usage-1: '&4Usage: /auth <setspawn|spawn|delspawn>'
   not-registered: '&4This player isn''t registered in the database.'
-  unregistered-successfully: '&5You have successfully unregistered %NAME%.'
+  unregistered-successfully: '&3You have successfully unregistered %NAME%.'
   already-registered: '&4This player is already registered.'
-  registered-successfully: '&5You have successfully registered %NAME%.'
-  usage: '&4Usage: /auth <register|unregister|changepassword> <player> [password]'
+  registered-successfully: '&3You have successfully registered %NAME%.'
+  changepassword-successfully: '&3You have changed %NAME%''s password.'
+  usage-2: '&4Usage: /auth <register|unregister|changepassword> <player> [password]'
+

@@ -28,14 +28,14 @@ public class AuthCommand implements CommandExecutor, TabCompleter {
                 switch(args[0]) {
                     case "reload":
                         if(!sender.hasPermission("auth.reload") && !sender.isOp()) {
-                            sender.sendMessage(ChatColor.DARK_RED + "You don't have access to this command.");
+                            sender.sendMessage(plugin.getConfigManager().getLangFile().getNoPerm());
                             return false;
                         }
                         plugin.getPlayerData().reloadPlayerConfig();
                         plugin.getSpawnData().reloadSpawnConfig();
                         plugin.getLangData().reloadLangConfig();
                         plugin.reloadConfig();
-                        sender.sendMessage(ChatColor.DARK_GREEN + "All the configs were successfully reloaded.");
+                        sender.sendMessage(plugin.getConfigManager().getLangFile().getCommandsMessages().get(0));
                         break;
                     case "setspawn":
                         if(!(sender instanceof Player)) {
@@ -43,11 +43,11 @@ public class AuthCommand implements CommandExecutor, TabCompleter {
                             return false;
                         }
                         if(!sender.hasPermission("auth.setspawn") && !sender.isOp()) {
-                            sender.sendMessage(ChatColor.DARK_RED + "You don't have access to this command.");
+                            sender.sendMessage(plugin.getConfigManager().getLangFile().getNoPerm());
                             return false;
                         }
                         plugin.getSpawnData().setSpawn(((Player) sender).getLocation());
-                        sender.sendMessage(ChatColor.DARK_GREEN + "You have set the new spawn point.");
+                        sender.sendMessage(plugin.getConfigManager().getLangFile().getCommandsMessages().get(1));
                         break;
                     case "spawn":
                         if(!(sender instanceof Player)) {
@@ -55,51 +55,51 @@ public class AuthCommand implements CommandExecutor, TabCompleter {
                             return false;
                         }
                         if(!sender.hasPermission("auth.spawn") && !sender.isOp()) {
-                            sender.sendMessage(ChatColor.DARK_RED + "You don't have access to this command.");
+                            sender.sendMessage(plugin.getConfigManager().getLangFile().getNoPerm());
                             return false;
                         }
                         if(plugin.getSpawnData().getSpawn() == null) {
-                            sender.sendMessage(ChatColor.DARK_RED + "There is no spawn set.");
+                            sender.sendMessage(plugin.getConfigManager().getLangFile().getCommandsMessages().get(2));
                             return false;
                         }
                         ((Player) sender).teleport(plugin.getSpawnData().getSpawn());
                         break;
                     case "delspawn":
                         if(plugin.getSpawnData().getSpawn() == null) {
-                            sender.sendMessage(ChatColor.DARK_RED + "There is no spawn set.");
+                            sender.sendMessage(plugin.getConfigManager().getLangFile().getCommandsMessages().get(2));
                             return false;
                         }
                         if(!sender.hasPermission("auth.delspawn") && !sender.isOp()) {
-                            sender.sendMessage(ChatColor.DARK_RED + "You don't have access to this command.");
+                            sender.sendMessage(plugin.getConfigManager().getLangFile().getNoPerm());
                             return false;
                         }
                         plugin.getSpawnData().removeSpawn();
-                        sender.sendMessage(ChatColor.DARK_GREEN + "You have removed the spawn point.");
+                        sender.sendMessage(plugin.getConfigManager().getLangFile().getCommandsMessages().get(3));
                         break;
                     default:
-                        sender.sendMessage(ChatColor.DARK_RED + "Usage: /auth <setspawn|spawn|delspawn>");
+                        sender.sendMessage(plugin.getConfigManager().getLangFile().getCommandsMessages().get(4));
                         return false;
                 }
                 break;
             case 2:
                 String target = args[1];
                 if(!args[0].equalsIgnoreCase("unregister")) {
-                    sender.sendMessage(ChatColor.DARK_RED + "Usage: /auth <register|unregister|changepassword> <player> [password]");
+                    sender.sendMessage(plugin.getConfigManager().getLangFile().getCommandsMessages().get(10));
                     return false;
                 }
                 if(!sender.hasPermission("auth.unregister.others")) {
-                    sender.sendMessage(ChatColor.DARK_RED + "You don't have access to this command.");
+                    sender.sendMessage(plugin.getConfigManager().getLangFile().getNoPerm());
                     return false;
                 }
                 if(!plugin.getPlayerData().isSaved(target)) {
-                    sender.sendMessage(ChatColor.DARK_RED + "This player isn't registered in the database.");
+                    sender.sendMessage(plugin.getConfigManager().getLangFile().getCommandsMessages().get(5).replaceAll("%NAME%", args[1]));
                     return false;
                 }
                 plugin.getPlayerData().getFileConfiguration().set(target, null);
                 plugin.getPlayerData().getFileConfiguration().set(target + ".ip", null);
                 plugin.getPlayerData().getFileConfiguration().set(target + ".password", null);
                 plugin.getPlayerData().savePlayerConfig();
-                sender.sendMessage(ChatColor.DARK_AQUA + "You have successfully unregistered " + args[1] + ".");
+                sender.sendMessage(plugin.getConfigManager().getLangFile().getCommandsMessages().get(6).replaceAll("%NAME%", args[1]));
                 if(Bukkit.getPlayerExact(target) == null) return false;
                 Objects.requireNonNull(Bukkit.getPlayerExact(target)).kickPlayer(plugin.getConfigManager().getLangFile().getUnRegisterMessages().get(1));
                 break;
@@ -119,39 +119,39 @@ public class AuthCommand implements CommandExecutor, TabCompleter {
                 switch(args[0]) {
                     case "register":
                         if(!sender.hasPermission("auth.register.others")) {
-                            sender.sendMessage(ChatColor.DARK_RED + "You don't have access to this command.");
+                            sender.sendMessage(plugin.getConfigManager().getLangFile().getNoPerm());
                             return false;
                         }
                         if(plugin.getPlayerData().isSaved(target1)) {
-                            sender.sendMessage(ChatColor.DARK_RED + "This player is already registered.");
+                            sender.sendMessage(plugin.getConfigManager().getLangFile().getCommandsMessages().get(7).replaceAll("%NAME%", args[1]));
                             return false;
                         }
                         plugin.getPlayerData().setPassword(target1, password);
-                        sender.sendMessage(ChatColor.DARK_AQUA + "You have successfully registered " + args[1] + ".");
+                        sender.sendMessage(plugin.getConfigManager().getLangFile().getCommandsMessages().get(8).replaceAll("%NAME%", args[1]));
                         if(Bukkit.getPlayerExact(target1) == null) return false;
-                        Objects.requireNonNull(Bukkit.getPlayerExact(target1)).kickPlayer("§5You have been registered! Log in.");
+                        Objects.requireNonNull(Bukkit.getPlayerExact(target1)).kickPlayer(plugin.getConfigManager().getLangFile().getRegistrationMessages().get(13));
                         break;
                     case "changepassword":
                         if(!sender.hasPermission("auth.changepassword.others")) {
-                            sender.sendMessage(ChatColor.DARK_RED + "You don't have access to this command.");
+                            sender.sendMessage(plugin.getConfigManager().getLangFile().getNoPerm());
                             return false;
                         }
                         if(!plugin.getPlayerData().isSaved(target1)) {
-                            sender.sendMessage(ChatColor.DARK_RED + "This player isn't registered in the database.");
+                            sender.sendMessage(plugin.getConfigManager().getLangFile().getCommandsMessages().get(5).replaceAll("%NAME%", args[1]));
                             return false;
                         }
                         plugin.getPlayerData().setPassword(target1, password);
-                        sender.sendMessage(ChatColor.DARK_AQUA + "You have changed " + args[1] + "'s password.");
+                        sender.sendMessage(plugin.getConfigManager().getLangFile().getCommandsMessages().get(9).replaceAll("%NAME%", args[1]));
                         if(Bukkit.getPlayerExact(target1) == null) return false;
-                        Objects.requireNonNull(Bukkit.getPlayerExact(target1)).kickPlayer("§cYour password has changed.");
+                        Objects.requireNonNull(Bukkit.getPlayerExact(target1)).kickPlayer(plugin.getConfigManager().getLangFile().getChangepassMessages().get(1));
                         break;
                     default:
-                        sender.sendMessage(ChatColor.DARK_RED + "Usage: /auth <register|unregister|changepassword> <player> [password]");
+                        sender.sendMessage(plugin.getConfigManager().getLangFile().getCommandsMessages().get(10));
                         return false;
                 }
                 break;
             default:
-                sender.sendMessage(ChatColor.DARK_RED + "Usage: /auth <register|unregister|changepassword> <player> [password]");
+                sender.sendMessage(plugin.getConfigManager().getLangFile().getCommandsMessages().get(10));
                 return false;
         }
         return true;
